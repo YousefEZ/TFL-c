@@ -19,7 +19,7 @@ Firstly, the dataset has been manipulated by:
 
 
 
-
+## Structures:
 Secondly, the data that was retrieved were placed in structs. Such as:
 
 <details><summary> Station (struct): Holds the data about the station </summary><p>
