@@ -43,6 +43,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
    g. **time**: Holds the time taken to reach this station.
 </p></details>
 
+---
 
 <details><summary> Link (struct: link). Holds the data about the link between each station. </summary><p>
     
@@ -59,6 +60,8 @@ Secondly, the data that was retrieved were placed in structs. Such as:
    f. **direction**: Direction of where the train is going (Northbound, Southbound, Eastbound, Westbound etc.)
 </p></details>
 
+---
+
 <details><summary> Priority Queue Node (struct: priority_queue_node). Holds the data in a node for the priority queue. </summary><p>
     
    a. **from_station_id**: holds the data about the starting station of the link.
@@ -72,6 +75,8 @@ Secondly, the data that was retrieved were placed in structs. Such as:
    e. **∗next**: holds the pointer of the next node in the next node.
     
 </p></details>
+
+---
 
 Features:
 ------
