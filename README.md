@@ -131,8 +131,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
       
       - [x] if the station's current link's to_station has a value of -2, which indicates that it has no more links in the array, then it breaks the loop.
       
-      - [x] if the link's to_station has it's links exhausted (stops the next stations from putting links to the starting station & stops unnecessary), then we go to the next
-         iteration.
+      - [x] if the link's to_station has it's links exhausted (stops the to_station from putting links), then we go to the next iteration.
       
       
 
