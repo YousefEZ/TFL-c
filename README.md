@@ -45,7 +45,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 ---
 
-####<details><summary> Link (struct link). Holds the data about the link between each station. </summary><p>
+<details><summary> Link (struct link). Holds the data about the link between each station. </summary><p>
     
    a. **to_station**: Holds the link's destinations station's id. If it holds is -2 then the link doesn't exist, if -1 then the id still needs to be found.
    
@@ -105,7 +105,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 
 ## Initialisation: 
-===================
+
 
 Features:
 ------
