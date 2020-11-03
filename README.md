@@ -28,18 +28,12 @@ f.   **from_line**: Holds the string of the name of line.
 g.  **time**: Holds the time taken to reach this station.
 
 2. Link (struct). Holds the data about the link between each station.
-
-a.    **to_station** If it holds is -2 then the link doesn't exist. if it's -1 means the to_station (id) still needs to be found.
-
-b.    **time**: Holds the time it takes to travel from the station holding the link to the to_station.
-
-c.    **distance**: Holds the distance between the from the station holding the link and the to_station.
-
-d.    **line**: Holds the name of the line that this link uses.
-
-e.    **destination**: Holds the name of the to_station. Used to fetch the to_station after all the stations have retrieved the required data.
-
-f.    **direction**: Direction of where the train is going (Northbound, Southbound, Eastbound, Westbound etc.)
+i.    **to_station** If it holds is -2 then the link doesn't exist. if it's -1 means the to_station (id) still needs to be found.
+ii.    **time**: Holds the time it takes to travel from the station holding the link to the to_station.
+iii.    **distance**: Holds the distance between the from the station holding the link and the to_station.
+iv.    **line**: Holds the name of the line that this link uses.
+v.    **destination**: Holds the name of the to_station. Used to fetch the to_station after all the stations have retrieved the required data.
+vi.    **direction**: Direction of where the train is going (Northbound, Southbound, Eastbound, Westbound etc.)
 
 
 
