@@ -9,11 +9,11 @@ The program utilises the tube station data set from the __Freedom of Information
 Firstly, the dataset has been manipulated by:
 - [x] Sorting the rows based on the Station From (A), as well as deleting the first row.
 
-- [x] Ensured that stations fall under the same name even if they are the same station. e.g. Euston (CX) → Euston.
+- [x] Ensuring that stations fall under the same name even if they are the same station. e.g. Euston (CX) → Euston.
 
-- [x] Ensured that stations don't have a space after their name. e.g. "Baker Street " → "Baker Street".
+- [x] Ensuring that stations don't have a space after their name. e.g. "Baker Street " → "Baker Street".
 
-- [x] Converted the file into a .csv to allow the file to be read more easily.
+- [x] Converting the file into a .csv to allow the file to be read more easily.
 
 
 
@@ -30,13 +30,13 @@ Secondly, the data that was retrieved were placed in structs. Such as:
    
    b. **name**: Holds the name of the station.
    
-   c. **links_exhausted**: Flag (1 or 0), that indicates whether or not the links from the stations are already in the priority queue.
-   
    d. **links**: An array of type link that holds data about each link from the station.
     
     
     ... // The following is data about the path that the dijkstra algorithm uses.
     
+    
+   c. **links_exhausted**: Flag (1 or 0), that indicates whether or not the links from the stations are already in the priority queue.
     
    e. **from_station**: The shortest path from the "starting station" to this station, comes from this station (...→ from_station → id).
    
@@ -107,7 +107,16 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 
 ## Initialisation: 
-1. The file *stations_db.csv* is opened in read, and is used to 
+
+1. an array of station is created, with the size defined in STATION_NUMBER (271), and the size of the array of links (in the statio) is defined in MAX_STATION_LINKS (10).
+
+2. The file *stations_db.csv* is opened in read, and is used to retrieve data about each station and it's links. Link's to_station are given the value -1.
+
+3. After all the stations have been initialised, then the links will find their true to_station id's values.
+
+\n\n\n\n\n
+
+## Program
 
 
 
