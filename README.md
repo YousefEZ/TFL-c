@@ -7,9 +7,11 @@ The program utilises the tube station data set from the __Freedom of Information
 
 # How it works:
 Firstly, the dataset has been manipulated by:
-[x] Sorting the rows based on the Station From (A), as well as deleting the first row.
-[x] Ensured that stations fall under the same name even if they are the same station. e.g. Euston (CX) → Euston.
-[x] Ensured that stations don't have a space after their name. e.g. "Baker Street " → "Baker Street".
+- [x] Sorting the rows based on the Station From (A), as well as deleting the first row.
+
+- [x] Ensured that stations fall under the same name even if they are the same station. e.g. Euston (CX) → Euston.
+
+- [x] Ensured that stations don't have a space after their name. e.g. "Baker Street " → "Baker Street".
 
 
 
