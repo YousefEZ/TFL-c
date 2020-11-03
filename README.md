@@ -105,17 +105,35 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 ## Initialisation: 
 
-1. an array of station is created, with the size defined in STATION_NUMBER (271), and the size of the array of links (in station) is defined in MAX_STATION_LINKS (10).
+1. an array of station is created, with the size defined in **STATION_NUMBER** (271), and the size of the array of links (in station) is defined in **MAX_STATION_LINKS** (10).
 
-2. The file *stations_db.csv* is opened in read. It's used to retrieve data about each station and it's links. Link's to_station are given the value -1.
+2. The file *stations_db.csv* is opened in read. It's used to retrieve data about each station and it's links.   
+    a. Each station's from_station is initially -1.  
+    b. Link's to_station are given the value -1.  
+    c. If the link doesn't exist, then it's to_station defaults to -2.
 
 3. After all the stations have been initialised, then the links will find their true to_station id's values.
 
 <br />
   
-## Program
+  
+## Program:
 
+1. Gets user input & verifies that the station names given are valid.
 
+2. Runs the dijkstra algorithm, arguments given are *stations (pointer to the array of all the stations), from_station, to_station*:
+
+    i. initialise the priority queue.
+    
+    ii. gets the links for the station with the id in from_station & puts them in the priority queue, unless:
+        
+      a. if the station has it's links_exhausted flag set to true (links are already in the queue, no need for duplicates), then it breaks the loop.
+      
+      b. if the station's current link's to_station has a value of -2, which indicates that it has no more links in the array, then it breaks the loop.
+      
+      c. if the link's to_station has it's links exhausted (stops the next stations from putting links to the starting station & stops unnecessary), then we go to the next                 iteration.
+      
+      
 
 Features:
 ------
