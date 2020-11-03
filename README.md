@@ -22,7 +22,7 @@ Firstly, the dataset has been manipulated by:
 ## Structures:
 Secondly, the data that was retrieved were placed in structs. Such as:
 
-<details><summary> Station (struct): Holds the data about the station </summary><p>
+<details><summary> Station (struct: station): Holds the data about the station </summary><p>
     
    a. **id**: The index that station has in the array.
    
@@ -45,7 +45,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 ---
 
-<details><summary> Link (struct). Holds the data about the link between each station. </summary><p>
+<details><summary> Link (struct: link). Holds the data about the link between each station. </summary><p>
     
    a. **to_station**: If it holds is -2 then the link doesn't exist. if it's -1 means the to_station (id) still needs to be found.
    
@@ -60,8 +60,19 @@ Secondly, the data that was retrieved were placed in structs. Such as:
    f. **direction**: Direction of where the train is going (Northbound, Southbound, Eastbound, Westbound etc.)
 </p></details>
 
-
-
+<details><summary> Priority Queue Node (struct: priority_queue_node). Holds the data in a node for the priority queue. </summary><p>
+    
+   a. **from_station_id**: holds the data about the starting station of the link.
+   
+   b. **to_station**: holds the data about the destination station of the link.
+   
+   c. **link_id**: the index of the link in the station struct of the from_station_id's station:
+   
+   d. **time**: the time it takes to traverse this link.
+   
+   e. **∗next**: holds the pointer of the next node in the next node.
+    
+</p></details>
 
 Features:
 ------
