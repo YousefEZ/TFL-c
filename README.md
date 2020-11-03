@@ -47,7 +47,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 <details><summary> Link (struct link). Holds the data about the link between each station. </summary><p>
     
-   a. **to_station**: If it holds is -2 then the link doesn't exist. if it's -1 means the to_station (id) still needs to be found.
+   a. **to_station**: Holds the link's destinations station's id. If it holds is -2 then the link doesn't exist. if it's -1 means the to_station (id) still needs to be found.
    
    b. **time**: Holds the time it takes to travel from the station holding the link to the to_station.
   
