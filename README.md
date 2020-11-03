@@ -37,7 +37,8 @@ Structures:
    g. **time**: Holds the time taken to reach this station.
 </p></details>
 
-Structures:
+---
+
 <details><summary> Link (struct). Holds the data about the link between each station. </summary><p>
     
    a. **to_station**: If it holds is -2 then the link doesn't exist. if it's -1 means the to_station (id) still needs to be found.
