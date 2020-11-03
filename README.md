@@ -15,11 +15,7 @@ Firstly, the dataset has been manipulated by:
 
 - [x] Converting the file into a .csv to allow the file to be read more easily.
 
-
-
-
-
-
+<br />
 
 ## Structures:
 Secondly, the data that was retrieved were placed in structs. Such as:
@@ -105,6 +101,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 ---
 
+<br />
 
 ## Initialisation: 
 
@@ -114,7 +111,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 3. After all the stations have been initialised, then the links will find their true to_station id's values.
 
-<br /><br /><br />
+<br />
   
 ## Program
 
