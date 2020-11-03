@@ -34,9 +34,8 @@ Structures:
 <details><summary> Link (struct). Holds the data about the link between each station. </summary><p>
     
    a. **to_station**: If it holds is -2 then the link doesn't exist. if it's -1 means the to_station (id) still needs to be found.
-   
    b. **time**: Holds the time it takes to travel from the station holding the link to the to_station.
-   
+  
    c. **distance**: Holds the distance between the from the station holding the link and the to_station.
    
    d. **line**: Holds the name of the line that this link uses.
