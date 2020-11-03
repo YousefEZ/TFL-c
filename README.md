@@ -49,7 +49,8 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 <details><summary> Link (struct link). Holds the data about the link between each station. </summary><p>
     
-   a. **to_station**: Holds the link's destinations station's id. If it holds is -2 then the link doesn't exist, if -1 then the id still needs to be found.  
+   a. **to_station**: Holds the link's destinations station's id. If it holds is -2 then the link doesn't exist, if -1 then the id still needs to be found.
+   
    b. **time**: Holds the time it takes to travel from the station holding the link to the to_station.
   
    c. **distance**: Holds the distance between the from the station holding the link and the to_station.
@@ -107,14 +108,15 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 ## Initialisation: 
 
-1. an array of station is created, with the size defined in STATION_NUMBER (271), and the size of the array of links (in the statio) is defined in MAX_STATION_LINKS (10).
+1. an array of station is created, with the size defined in STATION_NUMBER (271), and the size of the array of links (in station) is defined in MAX_STATION_LINKS (10).
 
-2. The file *stations_db.csv* is opened in read, and is used to retrieve data about each station and it's links. Link's to_station are given the value -1.
+2. The file *stations_db.csv* is opened in read. It's used to retrieve data about each station and it's links. Link's to_station are given the value -1.
 
 3. After all the stations have been initialised, then the links will find their true to_station id's values.
 
-
-
+  
+  
+  
 ## Program
 
 
