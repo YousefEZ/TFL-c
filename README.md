@@ -43,7 +43,6 @@ Secondly, the data that was retrieved were placed in structs. Such as:
    g. **time**: Holds the time taken to reach this station.
 </p></details>
 
----
 
 <details><summary> Link (struct: link). Holds the data about the link between each station. </summary><p>
     
