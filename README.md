@@ -5,7 +5,7 @@
 
 The program utilises the tube station data set from the __Freedom of Information__ request found [here](https://www.whatdotheyknow.com/request/distance_between_adjacent_underg#incoming-5516) (can be downloaded via this [link](https://www.whatdotheyknow.com/request/1779/response/5516/attach/3/Inter%20station%20database.xls?cookie_passthrough=1))
 
-# How it works:
+## Dataset manipulation:
 Firstly, the dataset has been manipulated by:
 - [x] Sorting the rows based on the Station From (A), as well as deleting the first row.
 
