@@ -17,7 +17,7 @@ Secondly, the data that was retrieved were placed in structs. These are the foll
 
 Structures:
 
-1. Station (struct): Holds the data about the station:
+Markup : 1. Station (struct): Holds the data about the station:
     a.     **id**: The index that station has in the array.
     b. **name**: Holds the name of the station.
     c.    **links_exhausted**: Flag (1 or 0), that indicates whether or not the links from the stations are already in the priority queue.
