@@ -16,16 +16,19 @@ Firstly, the dataset has been manipulated by:
 Secondly, the data that was retrieved were placed in structs. These are the following ideas:
 
 Structures:
-
-Markup : 1. Station (struct): Holds the data about the station:
-    a.     **id**: The index that station has in the array.
+<details>
+           <summary>Title 1</summary>
+           <p>
+1. <summary> **Station** (struct): Holds the data about the station </summary><p>
+    a. **id**: The index that station has in the array.
     b. **name**: Holds the name of the station.
-    c.    **links_exhausted**: Flag (1 or 0), that indicates whether or not the links from the stations are already in the priority queue.
-    d.    **links**: An array of type link that holds data about each link from the station.
+    c. **links_exhausted**: Flag (1 or 0), that indicates whether or not the links from the stations are already in the priority queue.
+    d. **links**: An array of type link that holds data about each link from the station.
     ... // The following is data about the path that the dijkstra algorithm uses.
     e. **from_station**: The shortest path from the "starting station" to this station, comes from this station. (starting  ... → from_station → id) 
-    f.   **from_line**: Holds the string of the name of line.
-    g.  **time**: Holds the time taken to reach this station.
+    f. **from_line**: Holds the string of the name of line.
+    g. **time**: Holds the time taken to reach this station.
+</p></details>
 
 2. Link (struct). Holds the data about the link between each station.
 i.    **to_station** If it holds is -2 then the link doesn't exist. if it's -1 means the to_station (id) still needs to be found.
