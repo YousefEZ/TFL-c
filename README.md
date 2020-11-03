@@ -121,7 +121,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 1. Gets user input & verifies that the station names given are valid.
 
-2. Runs the dijkstra algorithm, arguments given are *stations (pointer to the array of all the stations), from_station, to_station*:
+2. Runs the dijkstra algorithm, arguments given are *stations (pointer to the array of all the stations), from_station, target_station*:
 
     i. initialise the priority queue.
     
@@ -132,7 +132,30 @@ Secondly, the data that was retrieved were placed in structs. Such as:
       - [x] if the station's current link's to_station has a value of -2, which indicates that it has no more links in the array, then it breaks the loop.
       
       - [x] if the link's to_station has it's links exhausted (stops the to_station from putting links), then we go to the next iteration.
+    
+    iii. priority queue organises the nodes in order based on time (shortest time in front, longest at the back).
+    
+    iv. pop a value out of the priority queue and updates the station's values if:
+    
+      - [x] if the node value is not NULL (no more values in the priority queue).
       
+      - [x] if the path that is introduced is faster than the one that it already has, or if it has no path to it yet.
+    
+    v. assign the to_station's id of this path to from_station and repeat from step ii. until from_station is equal to the target_station.
+    
+3. Traceback the path by:
+
+    i. Initialise the stack.
+
+    ii. Place the target_station id into station variable.
+    
+    iii. Place station variable into a stack_node and place the stack_node into the stack.
+    
+    iv. find the from_station id of the station referenced in the station variable and place into the station variable.
+    
+    v. repeat from iii. if the station variable doesn't have a value of -1 (only the starting station's from_station will have that value in the path).
+
+4. output the path using the data in stack.
       
 
 Features:
