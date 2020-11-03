@@ -16,10 +16,7 @@ Firstly, the dataset has been manipulated by:
 Secondly, the data that was retrieved were placed in structs. These are the following ideas:
 
 Structures:
-<details>
-           <summary>Title 1</summary>
-           <p>
-1. <summary> **Station** (struct): Holds the data about the station </summary><p>
+<details><summary> **Station** (struct): Holds the data about the station </summary><p>
     a. **id**: The index that station has in the array.
     b. **name**: Holds the name of the station.
     c. **links_exhausted**: Flag (1 or 0), that indicates whether or not the links from the stations are already in the priority queue.
