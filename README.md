@@ -21,7 +21,7 @@ Structures:
     a. id: The index that station has in the array.
     b. name: Holds the name of the station.
     c. links_exhausted: Flag (1 or 0), that indicates whether or not the links from the stations are already in the priority queue.
-    d. **links**: An array of type link that holds data about each link from the station.
+    d. links: An array of type link that holds data about each link from the station.
     
     ... // The following is data about the path that the dijkstra algorithm uses.
     
