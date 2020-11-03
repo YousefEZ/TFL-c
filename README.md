@@ -114,8 +114,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 3. After all the stations have been initialised, then the links will find their true to_station id's values.
 
-  
-  
+<br /><br /><br />
   
 ## Program
 
