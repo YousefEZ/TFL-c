@@ -13,6 +13,8 @@ Firstly, the dataset has been manipulated by:
 
 - [x] Ensured that stations don't have a space after their name. e.g. "Baker Street " → "Baker Street".
 
+- [x] Converted the file into a .csv to allow the file to be read more easily.
+
 
 
 
@@ -105,6 +107,8 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 
 ## Initialisation: 
+1. The file *stations_db.csv* is opened in read, and is used to 
+
 
 
 Features:
