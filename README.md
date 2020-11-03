@@ -39,8 +39,6 @@ f.    **direction**: Direction of where the train is going (Northbound, Southbou
 
 
 [x] Stations are unique, and so we can assign a numerical value to each station, which is also it's index.
-[x]
-2. 
 
 Features:
 -------- 
