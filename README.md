@@ -127,11 +127,11 @@ Secondly, the data that was retrieved were placed in structs. Such as:
     
     ii. gets the links for the station with the id in from_station & puts them in the priority queue, unless:
         
-      a. if the station has it's links_exhausted flag set to true (links are already in the queue, no need for duplicates), then it breaks the loop.
+        a. if the station has it's links_exhausted flag set to true (links are already in the queue, no need for duplicates), then it breaks the loop.
       
-      b. if the station's current link's to_station has a value of -2, which indicates that it has no more links in the array, then it breaks the loop.
+        b. if the station's current link's to_station has a value of -2, which indicates that it has no more links in the array, then it breaks the loop.
       
-      c. if the link's to_station has it's links exhausted (stops the next stations from putting links to the starting station & stops unnecessary), then we go to the next                 iteration.
+        c. if the link's to_station has it's links exhausted (stops the next stations from putting links to the starting station & stops unnecessary), then we go to the next                 iteration.
       
       
 
