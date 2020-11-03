@@ -1,7 +1,7 @@
 # Transport for London Station Pathfinder #
 ---
 ## v1.0 @ 01/11/2020
-<img src= "https://i.ibb.co/D1jGdsm/tfl-logo3.png",
+<img src= "Assets/tfl-logo3.png",
 alt = "UNDER"
 style = "float: left; margin-right: 10px;"
 width="200"/>
