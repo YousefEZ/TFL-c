@@ -61,14 +61,13 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 </p></details>
 
 
-[x] Stations are unique, and so we can assign a numerical value to each station, which is also it's index.
-[x]
-2. 
+
 
 Features:
--------- 
-[x] 270+ stations available to choose from.
-[x] Finds the shortest path between 2 stations.
+------
+- [x] 270+ stations available to choose from.
+
+- [x] Finds the shortest path between 2 stations.
 
 
 
