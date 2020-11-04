@@ -4,6 +4,7 @@
 
 #define STATION_NUMBER 271 //number of stations in London.
 #define MAX_STATION_LINKS 10 //maximum number of underground links from a station.
+#define TRAIN_SWITCH_TIME 5 //the time it takes to switch to another tube.
 
 // add a preferences struct i.e. likes switching lines or not.
 
@@ -40,9 +41,9 @@ typedef struct link{
 typedef struct station{
     int id; //ID of the station
     char name[100]; //Name of the station.
-    int links_exhausted; //Flag to show whether or not the station has exhausted all possible links.
     link links[MAX_STATION_LINKS]; //the places the train can go to.
 
+    int links_exhausted; //Flag to show whether or not the station has exhausted all possible links.
     int from_station; // the previous station
     char from_line[100];
     double time;
@@ -85,15 +86,14 @@ priority_queue_node *pop(queue *queue){
 
 
 
-void dijkstra(station *stations, int from_station, int to_station){
+void dijkstra(station *stations, int from_station, int target_station){
 
     queue queue;
     queue.head = NULL;
     int link;
     
-    while (from_station != to_station) {
+    while (from_station != target_station) {
         station *current_station = &stations[from_station];
-
         for (link = 0; link < MAX_STATION_LINKS; link++) {
             int next_station = current_station->links[link].to_station;
 
@@ -113,8 +113,8 @@ void dijkstra(station *stations, int from_station, int to_station){
             link_node->link_id = link;
             link_node->time = current_station->time + current_station->links[link].time;
 
-            if (strcmp(current_station->from_line, stations[next_station].links[link].line) != 0) {
-                link_node->time = link_node->time + 3; //add 3 minutes if we need to switch lines, to discourage it.
+            if (strcmp(current_station->from_line, current_station->links[link].line) != 0 && current_station->from_station != -1) {
+                link_node->time = link_node->time + TRAIN_SWITCH_TIME; //add TRAIN_SWITCH_TIME minutes if we need to switch trains, to discourage it.
             }
 
             insert_into_priority_queue(&queue, link_node);
@@ -176,15 +176,15 @@ int get_link_index(link *links, int station_id, char *line_name){
 }
 
 
-void output_path(station *stations, int from_station, int to_station){
+void output_path(station *stations, int starting_station, int target_station){
 
-    dijkstra(stations, from_station, to_station);
+    dijkstra(stations, starting_station, target_station);
 
     stack pathway;
     pathway.head = NULL;
     stack_node *station_node;
 
-    int station_id = to_station;
+    int station_id = target_station;
     while (station_id != -1){
         station_node = malloc(sizeof(stack_node));
         station_node->to_station = station_id;
@@ -205,7 +205,7 @@ void output_path(station *stations, int from_station, int to_station){
            current_station->links[link_index].direction,
            next_station->from_line);
 
-    while (station_node->next->to_station != to_station){
+    while (station_node->next->to_station != target_station){
         stops_counter++;
         station_node = station_node->next;
         current_station = &stations[station_node->to_station];
@@ -314,7 +314,7 @@ int main() {
     while (user_input == 1) {
         printf("\n\nPlease select an option from the following:\n1.Find fastest route between two stations.\n2.Exit the program\n");
         scanf("%d", &user_input);
-        while ((ch = getchar()) != '\n' && ch != EOF){}
+        while ((ch = getchar()) != '\n' && ch != EOF){} // erase buffer
 
         char f_station_name[64];
         char t_station_name[64];
