@@ -145,15 +145,15 @@ Secondly, the data that was retrieved were placed in structs. Such as:
     
 3. Traceback the path by:
 
-      **i.** Initialise the stack.
+    **1.** Initialise the stack.
 
-    **ii.** Place the target_station id into station variable.
+    **2.** Place the target_station id into station variable.
     
-    **iii.** Place station variable into a stack_node and place the stack_node into the stack.
+    **3.** Place station variable into a stack_node and place the stack_node into the stack.
     
-    **iv.** Find the from_station id of the station referenced in the station variable and place into the station variable.
+    **4.** Find the from_station id of the station referenced in the station variable and place into the station variable.
     
-    **v.**  Repeat from iii. if the station variable doesn't have a value of -1 (only the starting station's from_station will have that value in the path).
+    **5.**  Repeat from iii. if the station variable doesn't have a value of -1 (only the starting station's from_station will have that value in the path).
 
 4. output the path using the data in stack.
       
