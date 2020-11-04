@@ -145,7 +145,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
     
 3. Traceback the path by:
 
-    **i.** Initialise the stack.
+      **i.** Initialise the stack.
 
     **ii.** Place the target_station id into station variable.
     
