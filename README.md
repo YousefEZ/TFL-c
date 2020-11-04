@@ -156,17 +156,3 @@ Secondly, the data that was retrieved were placed in structs. Such as:
     **e.**  Repeat from c. if the station variable doesn't have a value of -1 (only the starting station's from_station will have that value in the path).
 
 4. output the path using the data in stack.
-      
-
-Features:
-------
-- [x] 270+ stations available to choose from.
-
-- [x] Finds the shortest path between 2 stations.
-
-
-
-    
-
-
-
