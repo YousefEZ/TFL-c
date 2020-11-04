@@ -135,8 +135,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
       
       - [x] if the link's to_station has it's links exhausted (stops the to_station from putting links), then we go to the next iteration.
       
-    **c.** Before the node is put in the priority queue, the link's line is checked against the current station's from_line (to check for line switch), &  
-        increases it's time if the line switches by **TRAIN_SWITCH_TIME** (5) unless:
+    **c.** Before the node is put in the priority queue, the link's line is checked against the current station's from_line (to check for line switch), & increases it's time if the line switches by **TRAIN_SWITCH_TIME** (5) unless:
     
       - [x] if the current station's from_station is -1 (which means it's the starting station, which doesn't come from a specific line).
     
