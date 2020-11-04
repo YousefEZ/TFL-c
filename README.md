@@ -134,16 +134,20 @@ Secondly, the data that was retrieved were placed in structs. Such as:
       - [x] if the station's current link's to_station has a value of -2, which indicates that it has no more links in the array, then it breaks the loop.
       
       - [x] if the link's to_station has it's links exhausted (stops the to_station from putting links), then we go to the next iteration.
+      
+    **c.** Before the node is put in the priority queue, the link's line is checked against the current station's from_line (to check for line switch), unless:
     
-    **c.** Priority queue organises the nodes in order based on time (shortest time in front, longest at the back).
+      - [x] if the current station's from_station is -1 (which means it's the starting station, which doesn't come from a specific line).
     
-    **d.** Pop a value out of the priority queue and updates the station's values if:
+    **d.** Priority queue organises the nodes in order based on time (shortest time in front, longest at the back).
+    
+    **e.** Pop a value out of the priority queue and updates the station's values if:
     
       - [x] if the node value is not NULL (no more values in the priority queue).
       
       - [x] if the path that is introduced is faster than the one that it already has, or if it has no path to it yet.
     
-    **e.** Assign the to_station's id of this path to from_station and repeat from step b. until from_station is equal to the target_station.
+    **f.** Assign the to_station's id of this path to from_station and repeat from step b. until from_station is equal to the target_station.
     
 3. Traceback the path by:
 
