@@ -161,4 +161,16 @@ Secondly, the data that was retrieved were placed in structs. Such as:
     
     **e.**  Repeat from c. if the station variable doesn't have a value of -1 (only the starting station's from_station will have that value in the path).
 
-4. output the path using the data in stack.
+4. Output the path using the data in stack.
+
+5. Reset the values in each station to:
+
+    - [x] from_station = -1
+    
+    - [x] time = 0.0
+    
+    - [x] links_exhausted = 0
+    
+    - [x] from_line = ""
+
+6. Repeat from 1. Unless the user asked to exit the program.
