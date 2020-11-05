@@ -24,11 +24,9 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 <details><summary> Station (struct station): Holds the data about the station </summary><p>
     
-   a. **id**: The index that station has in the array.
+   a. **name**: Holds the name of the station.
    
-   b. **name**: Holds the name of the station.
-   
-   d. **links**: An array of type link that holds data about each link from the station.
+   b. **links**: An array of type link that holds data about each link from the station.
     
     
     ... // The following is data about the path that the dijkstra algorithm uses.
@@ -36,11 +34,14 @@ Secondly, the data that was retrieved were placed in structs. Such as:
     
    c. **links_exhausted**: Flag (1 or 0), that indicates whether or not the links from the stations are already in the priority queue.
     
-   e. **from_station**: The shortest path from the "starting station" to this station, comes from this station (...→ from_station → id).
+   d. *station* **∗from_station**: The shortest path from the "starting station" to this station, comes from this station (...→ from_station → id).
    
-   f. **from_line**: Holds the string of the name of line.
+   e. *link* **∗from_line**: Holds the string of the name of line.
    
-   g. **time**: Holds the time taken to reach this station.
+   f. **time**: Holds the time taken to reach this station.
+   
+   g. **distance**: Holds the distance from the starting station to this station.
+   
 </p></details>
 
 ---
@@ -64,9 +65,9 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 <details><summary> Priority Queue Node (struct priority_queue_node). Holds the data in a node for the priority queue. </summary><p>
     
-   a. **from_station**: holds the data about the starting station of the link.
+   a. *station* **∗from_station**: holds the data about the starting station of the link.
    
-   c. **link_id**: the index of the link in the station struct of the from_station_id's station:
+   c. *link* **link**: the link from the station struct of the from_station_id's station:
    
    d. **time**: the time it takes to traverse this link.
    
@@ -86,7 +87,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 <details><summary> Stack Node (struct stack_node). Holds the data in a node for the stack. </summary><p>
     
-   a. **to_station**: holds the id of the next station.
+   a. *station* **∗to_station**: holds the pointer to the next station.
    
    b. *stack_node* **∗next**: holds the pointer of the next node in the stack.
    
