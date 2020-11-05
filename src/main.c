@@ -4,67 +4,69 @@
 
 #define STATION_NUMBER 271 //number of stations in London.
 #define MAX_STATION_LINKS 10 //maximum number of underground links from a station.
-#define TRAIN_SWITCH_TIME 5 //the time it takes to switch to another tube.
+#define TRAIN_SWITCH_TIME 5 //the time it takes to switch to another line. Adjustable.
 
-// add a preferences struct i.e. likes switching lines or not.
+// Represents the path between two stations. Structure is held in the station struct.
+typedef struct link{
+    int to_station; //if to_station is -2 then the link doesn't exist. if to_station is -1 means the to_station still needs to be found.
+    double time; // time it takes to traverse this path.
+    double distance; // distance between the station that this link is held from, to the to_station's station (path distance)
+    char line[32]; // name of the line that the train traverses on.
+    char destination[32]; // name of the to_station, used to initialise the link.
+    char direction[32]; // the direction of the path (Northbound, Eastbound, Southbound, Westbound, etc.)
+} link;
 
+// Represents the station, and how the station is connected to the path.
+typedef struct station{
+    char name[32]; // Name of the station.
+    link links[MAX_STATION_LINKS]; // The paths starting from this station.
+
+    int links_exhausted; //Flag to show whether or not the station has exhausted all possible links.
+    struct station *from_station; // pointer to the previous station that the train visited.
+    link *from_link; // the line that the train used from the from_station to this station.
+    double time; // the time is took to reach this station from the starting station.
+    double distance; // the distance between the starting station and this station.
+
+}station;
+
+// represents a node in the priority queue
 typedef struct priority_queue_node{
-    int from_station_id;
-    int to_station;
-    int link_id;
+    station *from_station;
+    link *link;
     double time;
     struct priority_queue_node *next;
 }priority_queue_node;
 
+// Abstract Data Type (ADT), Queue. Holds data in a linked list fashion. Node with the shortest time is popped first.
 typedef struct queue{
     priority_queue_node* head;
 }queue;
 
+// represents a node in a stack
 typedef struct stack_node{
-    int to_station;
+    station *to_station;
     struct stack_node *next;
 }stack_node;
 
+// Abstract Data Type (ADT), Stack. Holds data in a linked list fashion. Node at the head gets popped first (FILO).
 typedef struct stack {
-    stack_node* head;
+    stack_node *head;
 }stack;
 
-typedef struct link{
-    int to_station; //if to_station is -2 then the link doesn't exist. if to_station is -1 means the to_station still needs to be found.
-    double time;
-    double distance;
-    char line[100];
-    char destination[100];
-    char direction[50];
-} link;
 
-typedef struct station{
-    int id; //ID of the station
-    char name[100]; //Name of the station.
-    link links[MAX_STATION_LINKS]; //the places the train can go to.
 
-    int links_exhausted; //Flag to show whether or not the station has exhausted all possible links.
-    int from_station; // the previous station
-    char from_line[100];
-    double time;
-}station;
-
-void insert_into_stack(stack * stack, stack_node* new_node) {
-    if (stack->head == NULL) {
-        stack->head = new_node;
-    } else {
-        stack_node * current = stack->head;
-        stack->head = new_node;
-        new_node->next = current;
-    }
+void push_into_stack(stack *stack, stack_node* new_node) {
+    new_node->next = stack->head;
+    stack->head = new_node;
 }
 
-void insert_into_priority_queue(queue *queue, priority_queue_node *new_node){
+void push_into_priority_queue(queue *queue, priority_queue_node *new_node){
     if (queue->head == NULL){
-        priority_queue_node* temp = queue->head;
+        // there is no node in the head. assign the pointer to the new_node into the queue head, and the new_node's next to NULL.
         queue->head = new_node;
-        new_node->next = temp;
+        new_node->next = NULL;
     } else {
+        // finds it's position in the queue based on the new_node's time (priority queue).
         priority_queue_node *current = queue->head;
         while (current->next != NULL && current->time < new_node->time){
             current = current->next;
@@ -75,7 +77,8 @@ void insert_into_priority_queue(queue *queue, priority_queue_node *new_node){
     }
 }
 
-priority_queue_node *pop(queue *queue){
+// gets the node with the shortest time, and pops it out of the queue.
+priority_queue_node *pop_queue(queue *queue){
     if (queue == NULL || queue->head == NULL){
         return NULL;
     }
@@ -84,54 +87,77 @@ priority_queue_node *pop(queue *queue){
     return node;
 }
 
+//pops the node that was last inserted into the stack.
+stack_node *pop_stack(stack *stack){
+    if (stack == NULL || stack->head == NULL){
+        return NULL;
+    }
+    stack_node *node = stack->head;
+    stack->head = stack->head->next;
+    return node;
+}
 
 
-void dijkstra(station *stations, int from_station, int target_station){
+// performs dijkstra's algorithm.
+void dijkstra(station *stations, int starting_station, int target_station){
 
-    queue queue;
-    queue.head = NULL;
-    int link;
-    
+    queue priority_queue;
+    priority_queue.head = NULL;
+    int link_id;
+    int from_station = starting_station;
+
+    // stops when the target_station is inserting it's links into the priority queue.
     while (from_station != target_station) {
-        station *current_station = &stations[from_station];
-        for (link = 0; link < MAX_STATION_LINKS; link++) {
-            int next_station = current_station->links[link].to_station;
+        station *current_station = &stations[from_station]; //the station that we are on currently.
+
+        // inserts every link into the priority queue, unless it's already been added or doesn't exist.
+        for (link_id = 0; link_id < MAX_STATION_LINKS; link_id++) {
+            int next_station = current_station->links[link_id].to_station;
 
             //if next_station doesn't exist or if the current station's links have already been added to priority queue.
             if (next_station == -2 || current_station->links_exhausted){
                 break;
             }
 
-            //if links_exhausted is 1, then we already found the shortest path to next_station.
-            if (stations[next_station].links_exhausted){
+            //if the next station already has a path to it, then we already found the shortest path to next_station.
+            //if next station is the starting station then skip.
+            if (stations[next_station].from_station != NULL || next_station == starting_station){
                 continue;
             }
 
+            // create a new node for the priority queue and assign it's data.
             priority_queue_node *link_node = malloc(sizeof(priority_queue_node));
-            link_node->from_station_id = from_station;
-            link_node->to_station = next_station;
-            link_node->link_id = link;
-            link_node->time = current_station->time + current_station->links[link].time;
+            link_node->from_station = current_station;
+            link_node->link = &current_station->links[link_id];
+            link_node->time = current_station->time + current_station->links[link_id].time;
 
-            if (strcmp(current_station->from_line, current_station->links[link].line) != 0 && current_station->from_station != -1) {
+            // starting_station will not have a from_line as you are entering from there, therefore don't penalise.
+
+            if (from_station != starting_station && strcmp(current_station->from_link->line, link_node->link->line) != 0) {
                 link_node->time = link_node->time + TRAIN_SWITCH_TIME; //add TRAIN_SWITCH_TIME minutes if we need to switch trains, to discourage it.
             }
 
-            insert_into_priority_queue(&queue, link_node);
-        }
-        priority_queue_node *node = pop(&queue);
 
+            push_into_priority_queue(&priority_queue, link_node);
+        }
+
+        current_station->links_exhausted = 1; // we have placed all the links from this station into the priority queue.
+        priority_queue_node *node = pop_queue(&priority_queue); //pops the node with the shortest time in the queue.
+
+        // if the queue is empty.
         if (node == NULL){
             break;
         }
-        stations[node->from_station_id].links_exhausted = 1;
+        link *current_link = node->link;
 
-        if ((node->time < stations[node->to_station].time || stations[node->to_station].time == 0.0)) {
+        // If the station has not been accessed yet, that means that this path is the fastest to it.
+        if (stations[current_link->to_station].time == 0.0) {
             // assign the current station to the destination station's previous station pointer & the time to travel.
-            stations[node->to_station].from_station = node->from_station_id;
-            stations[node->to_station].time = node->time;
-            strcpy(stations[node->to_station].from_line, stations[node->from_station_id].links[node->link_id].line);
-            from_station = node->to_station;
+            stations[current_link->to_station].from_station = node->from_station;
+            stations[current_link->to_station].from_link = current_link;
+            stations[current_link->to_station].time = node->time;
+            stations[current_link->to_station].distance = current_link->distance + node->from_station->distance;
+            from_station = current_link->to_station; // to get the links from this station as it is now part of the path.
         }
     }
 }
@@ -164,107 +190,117 @@ int get_station_id(station *stations, const char *station_name){
     }
 }
 
-int get_link_index(link *links, int station_id, char *line_name){
-    // get the index of the link, which takes you to the specified station to_station using line_name and station_id from links.
-    int link;
-    for (link=0; link<MAX_STATION_LINKS; link++){
-        if (links[link].to_station == station_id && (strcmp(links[link].line, line_name) == 0)){
-            return link;
-        }
-    }
-    return -1;
+stack_node *create_node(station *to_station){
+    stack_node *node = malloc(sizeof(stack_node));
+    node->to_station = to_station;
+    return node;
 }
 
+// uses dijkstra's algorithm to get the shortest path between starting_station and target_station & outputs the path.
 
-void output_path(station *stations, int starting_station, int target_station){
-
-    dijkstra(stations, starting_station, target_station);
-
-    stack pathway;
-    pathway.head = NULL;
+stack *get_path(station *stations, int target_station){
+    stack *pathway = malloc(sizeof(stack)); // creates a stack to traceback the path from the target_station to the starting_station.
+    pathway->head = NULL;
     stack_node *station_node;
 
-    int station_id = target_station;
-    while (station_id != -1){
-        station_node = malloc(sizeof(stack_node));
-        station_node->to_station = station_id;
-        insert_into_stack(&pathway, station_node);
-        station_id = stations[station_id].from_station;
+    //putting the stack nodes into the stack using each station's from_station to traceback the path.
+    station *current_station = &stations[target_station];
+
+    station_node = create_node(current_station);
+    push_into_stack(pathway, station_node);
+
+    while (current_station->from_station != NULL){
+        station_node = create_node(current_station);
+        push_into_stack(pathway, station_node);
+        current_station = current_station->from_station;
     }
 
-    station_node = pathway.head;
-    int link_index;
-    int stops_counter=0;
 
-    station *current_station = &stations[station_node->to_station];
-    station *next_station = &stations[station_node->next->to_station];
+    return pathway;
+}
 
-    link_index = get_link_index(current_station->links, next_station->id, next_station->from_line);
+void output_path(station *stations, int target_station){
+    stack *pathway = get_path(stations, target_station);
 
+
+    // pop first node from stack.
+    stack_node *station_node = pop_stack(pathway);
+
+    // pointer to the current station & the station after that.
+    station *current_station = station_node->to_station;
+    station *next_station = station_node->next->to_station;
+
+    // gets the index of the link in the links array of the station.
+
+    // output the leaving statement.
     printf("LEAVING FROM: %s via - %s %s line, ride for ", current_station->name,
-           current_station->links[link_index].direction,
-           next_station->from_line);
+           next_station->from_link->direction,
+           next_station->from_link->line);
 
-    while (station_node->next->to_station != target_station){
+    int stops_counter=0; // count the number of stops before the next line switch.
+
+    // continue popping until the next_station is not the target_station.
+    while (station_node->next->next != NULL){
         stops_counter++;
-        station_node = station_node->next;
-        current_station = &stations[station_node->to_station];
-        next_station = &stations[station_node->next->to_station];
 
-        if (strcmp(current_station->from_line, next_station->from_line) != 0) {
+        station_node = pop_stack(pathway);
+        current_station = station_node->to_station;
+        next_station = station_node->next->to_station;
 
-            link_index = get_link_index(current_station->links, next_station->id, next_station->from_line);
+
+        // if the line switches, then output that the user should switch lines.
+        if (strcmp(current_station->from_link->line, next_station->from_link->line) != 0) {
+
 
             printf("%d stop(s)\nWHEN ARRIVING AT: %s, SWITCH LINE TO %s - %s line, and ride for ", stops_counter,
-                   current_station->name, current_station->links[link_index].direction,
-                   next_station->from_line);
+                   current_station->name, next_station->from_link->direction,
+                   next_station->from_link->line);
 
-            stops_counter = 0;
+            stops_counter = 0; // reset
 
         }
     }
 
-    printf("%d stop(s).\nARRIVE AT: %s. JOURNEY TIME: %.2f minutes.", stops_counter + 1, next_station->name, next_station->time);
+    // output the arrival message.
+    printf("%d stop(s).\nARRIVE AT: %s. JOURNEY TIME: %.2f minutes / Distance Travelled: %.2f km", stops_counter + 1,
+           next_station->name, next_station->time, next_station->distance);
 
 }
 
-
-int main() {
-
-
-    station stations[STATION_NUMBER];
-
-    FILE *fp = fopen("../data/stations_db.csv", "r");
-    if (!fp){
-        printf("Error reading file");
-    }
-
+//initialises the data in each station.
+int initialise_stations(station *stations, char *filename){
     char buffer[1024]; //used to temporarily store a line from the csv file.
     int station = -1; //used to index the array of station structs. Set to -1 to signal an initialisation for the first station.
     int link_counter=0; //used to index the array of link structs in the station struct.
+
+    //temporarily stores the data for the station.
     char *line, *direction, *station_name, *destination;
     double distance, time;
 
     // parses the data from the file into the links array of structs.
+    FILE *fp = fopen(filename, "r");
+    if (!fp){
+        return 0;
+    }
     link *current_link;
     while (fgets(buffer, 1024, fp)){
         line = strtok(buffer,",");
         direction = strtok(NULL, ",");
         station_name = strtok(NULL, ",");
         destination = strtok(NULL, ",");
-        distance = strtod(strtok(NULL, ","), NULL);
+        distance = strtod(strtok(NULL, ","), NULL); //converts the value from string to a double.
         time = strtod(strtok(NULL, ","), NULL); //converts the value from string to a double.
 
         // using a cache to slightly speed up the process as the list is ordered.
         if (strcmp(stations[station].name, station_name) != 0 || station == -1) {
             // reset link_counter because its a new station & get the new station's to_station.
             station++; //increment by 1
-            stations[station].id = station;
-            strcpy(stations[station].name, station_name); //remove the \n at the end of the buffer.
+            strcpy(stations[station].name, station_name);
             stations[station].links_exhausted = 0;
             stations[station].time = 0;
-            stations[station].from_station = -1;
-            stations[station].from_line[0] = '\0';
+            stations[station].distance = 0.0;
+            stations[station].from_station = NULL;
+            stations[station].from_link = NULL;
 
 
             // initialise the values in the links struct.
@@ -300,56 +336,86 @@ int main() {
                 break;
             }
             current_link->to_station = get_station_id(stations, current_link->destination);
-
+            free(current_link->destination); // no longer used.
         }
     }
+    return 1;
+}
 
 
+// gets the station index from the user's input, & returns it.
+int get_user_station_input(station *stations, char *message){
 
-    int user_input = 1;
+    int station = -1;
+    char station_name[64];
+
+    while (station == -1) {
+        printf("%s", message);
+        gets(station_name);
+        strupr(station_name);
+        if ((station = get_station_id(stations, station_name)) == -1) {
+            printf("STATION NOT RECOGNISED\n");
+        }
+    }
+    return station;
+}
+
+
+// reset the path data in the stations.
+void reset_station_paths(station *stations){
+    int counter;
+
+    for (counter = 0; counter < STATION_NUMBER; counter++) {
+        stations[counter].from_station = NULL;
+        stations[counter].from_link = NULL;
+        stations[counter].time = 0.0;
+        stations[counter].links_exhausted = 0;
+    }
+}
+
+
+int get_user_option_input(void){
+    int user_input = 0;
     char ch;
+    while (1) {
+        printf("\n\nPlease select an option from the following:\n(1) Find fastest route between two stations.\n(2) Exit the program\n");
+        scanf("%d", &user_input);
+        while ((ch = getchar()) != '\n' && ch != EOF) {} //erase buffer.
+
+
+        switch (user_input){
+            case 1:
+                return 1;
+            case 2:
+                return 2;
+            default:
+                printf("Unrecognised option. Please try again");
+        }
+    }
+}
+
+int main() {
+
+
+    station stations[STATION_NUMBER];
+
+    if (initialise_stations(stations, "../data/stations_db.csv") == 0){
+        printf("ERROR READING FILE. PLEASE CHECK FILE");
+        return -1;
+    }
 
     printf("Welcome to Transport For London path selector");
 
-    while (user_input == 1) {
-        printf("\n\nPlease select an option from the following:\n1.Find fastest route between two stations.\n2.Exit the program\n");
-        scanf("%d", &user_input);
-        while ((ch = getchar()) != '\n' && ch != EOF){} // erase buffer
+    while (get_user_option_input() == 1) {
 
-        char f_station_name[64];
-        char t_station_name[64];
-        int f_station = -1;
-        int t_station = -1;
+        int starting_station = get_user_station_input(stations, "Enter from station name: ");
+        int target_station = get_user_station_input(stations, "Enter to station name: ");
 
-        while (f_station == -1) {
-            printf("Enter from station name: ");
-            gets(f_station_name);
-            strupr(f_station_name);
-            if ((f_station = get_station_id(stations, f_station_name)) == -1) {
-                printf("FROM STATION NOT RECOGNISED\n");
-            }
-        }
-
-        while (t_station == -1) {
-            printf("Enter to station name: ");
-            gets(t_station_name);
-            strupr(t_station_name);
-            if ((t_station = get_station_id(stations, t_station_name)) == -1) {
-                printf("TO STATION NOT RECOGNISED\n");
-            }
-        }
-
-        output_path(stations, f_station, t_station);
-        int counter;
-        // reset the data in the station.
-        for (counter = 0; counter < STATION_NUMBER; counter++) {
-            stations[counter].from_station = -1;
-            stations[counter].time = 0.0;
-            stations[counter].links_exhausted = 0;
-            strcpy(stations[counter].from_line, "");
-        }
+        dijkstra(stations, starting_station, target_station);
+        output_path(stations, target_station);
+        reset_station_paths(stations);
     }
 
-    printf("\n Exiting. Having a nice day!");
+    printf("\n Exiting...");
     return 0;
 }
