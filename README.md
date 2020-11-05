@@ -64,9 +64,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
 <details><summary> Priority Queue Node (struct priority_queue_node). Holds the data in a node for the priority queue. </summary><p>
     
-   a. **from_station_id**: holds the data about the starting station of the link.
-   
-   b. **to_station**: holds the data about the destination station of the link.
+   a. **from_station**: holds the data about the starting station of the link.
    
    c. **link_id**: the index of the link in the station struct of the from_station_id's station:
    
@@ -89,6 +87,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 <details><summary> Stack Node (struct stack_node). Holds the data in a node for the stack. </summary><p>
     
    a. **to_station**: holds the id of the next station.
+   
    b. *stack_node* **∗next**: holds the pointer of the next node in the stack.
    
 </p></details>
