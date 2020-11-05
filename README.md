@@ -34,7 +34,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
     
    c. **links_exhausted**: Flag (1 or 0), that indicates whether or not the links from the stations are already in the priority queue.
     
-   d. *station* **∗from_station**: The shortest path from the "starting station" to this station, comes from this station (...→ from_station → id).
+   d. *station* **∗from_station**: The shortest path from the "starting station" to this station, comes from this station (...→ from_station → station).
    
    e. *link* **∗from_line**: Holds the string of the name of line.
    
