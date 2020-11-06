@@ -112,7 +112,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
     b. Link's to_station are given the value -1.  
     c. If the link doesn't exist, then it's to_station defaults to -2.
 
-3. After all the stations have been initialised, then the links will find their true to_station id's values.
+3. After all the stations have been initialised, then the links will find their true to_station index in the array of stationss.
 
 <br />
   
@@ -131,19 +131,22 @@ Secondly, the data that was retrieved were placed in structs. Such as:
       
       - [x] if the station's current link's to_station has a value of -2, which indicates that it has no more links in the array, then it breaks the loop.
       
-      - [x] if the link's to_station has it's links exhausted (stops the to_station from putting links), then we go to the next iteration.
+      - [x] if the link's to_station has it's links exhausted (stops the to_station from putting unrequired links), then we go to the next iteration.
+      
+      - [x] if the link's to_station is the starting_station then skip iteration.
+      
       
     **c.** Before the node is put in the priority queue, the link's line is checked against the current station's from_line (to check for line switch), & increases it's time if the line switches by **TRAIN_SWITCH_TIME** (5) unless:
     
-      - [x] if the current station's from_station is -1 (which means it's the starting station, which doesn't come from a specific line).
+      - [x] if the current station's from_station is NULL (which means it's the starting station, which doesn't come from a specific line).
     
     **d.** Priority queue organises the nodes in order based on time (shortest time in front, longest at the back).
     
     **e.** Pop a value out of the priority queue and updates the station's values if:
     
-      - [x] if the node value is not NULL (no more values in the priority queue).
+      - [x] if the node pointer is not NULL (no more values in the priority queue).
       
-      - [x] if the path that is introduced is faster than the one that it already has, or if it has no path to it yet.
+      - [x] if the to_station's time is 0.
     
     **f.** Assign the to_station's id of this path to from_station and repeat from step b. until from_station is equal to the target_station.
     
@@ -151,24 +154,24 @@ Secondly, the data that was retrieved were placed in structs. Such as:
 
     **a.** Initialise the stack.
 
-    **b.** Place the target_station id into station variable.
+    **b.** Place the target_station's address into station pointer.
     
-    **c.** Place station variable into a stack_node and place the stack_node into the stack.
+    **c.** Place station pointer into a stack_node and push the stack_node into the stack.
     
-    **d.** Find the from_station id of the station referenced in the station variable and place into the station variable.
+    **d.** Place the from_station pointer of the station referenced in the station pointer and place into the station pointer.
     
-    **e.**  Repeat from c. if the station variable doesn't have a value of -1 (only the starting station's from_station will have that value in the path).
+    **e.**  Repeat from c, until the from_station pointer of the station pointer isn't NULL (only the starting station's from_station will be NULL on that path).
 
 4. Output the path using the data in stack.
 
 5. Reset the values in each station to:
 
-    - [x] from_station = -1
+    - [x] from_station = NULL
+    
+    - [x] from_link = NULL
     
     - [x] time = 0.0
     
     - [x] links_exhausted = 0
-    
-    - [x] from_line = ""
 
 6. Repeat from 1. Unless the user asked to exit the program.
