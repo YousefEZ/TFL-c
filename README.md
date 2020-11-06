@@ -19,8 +19,8 @@ Firstly, the dataset has been manipulated by:
 
 <br />
 
-## Structures:
-Secondly, the data that was retrieved were placed in structs. Such as:
+## Main Structures:
+The data that was retrieved were placed in structs. Such as:
 
 <details><summary> Station (struct station): Holds the data about the station </summary><p>
     
@@ -59,49 +59,6 @@ Secondly, the data that was retrieved were placed in structs. Such as:
    f. **direction**: Direction of where the train is going (Northbound, Southbound, Eastbound, Westbound etc.)
 </p></details>
 
----
-
-<details><summary> Priority Queue Node (struct priority_queue_node). Holds the data in a node for the priority queue. </summary><p>
-    
-   a. *station* **∗from_station**: holds the data about the starting station of the link.
-   
-   c. *link* **link**: the link from the station struct of the from_station_id's station:
-   
-   d. **time**: the time it takes to traverse this link.
-   
-   e. *priority_queue_node* **∗next**: holds the pointer of the next node in the queue.
-    
-</p></details>
-
----
-
-<details><summary> Priority Queue (struct queue). Holds the nodes in a queue (for the priority queue). </summary><p>
-    
-   a. *priority_queue_node* **∗head**: holds the pointer of the starting node of the queue.
-   
-</p></details>
-
----
-
-<details><summary> Stack Node (struct stack_node). Holds the data in a node for the stack. </summary><p>
-    
-   a. *station* **∗to_station**: holds the pointer to the next station.
-   
-   b. *stack_node* **∗next**: holds the pointer of the next node in the stack.
-   
-</p></details>
-
----
-
-<details><summary> Stack (struct stack). Holds the nodes in FILO structure. Used for the traceback (to get the shortest path). </summary><p>
-    
-   a. *stack_node* **∗head**: holds the pointer to the first node in the stack.
- 
-</p></details>
-
----
-
-<br />
 
 ## Initialisation: 
 
