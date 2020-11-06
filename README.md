@@ -36,7 +36,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
     
    d. *station* **∗from_station**: The shortest path from the "starting station" to this station, comes from this station (...→ from_station → station).
    
-   e. *link* **∗from_line**: Holds the string of the name of line.
+   e. *link* **∗from_link**: Holds the string of the name of line.
    
    f. **time**: Holds the time taken to reach this station.
    
