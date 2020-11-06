@@ -26,7 +26,7 @@ Secondly, the data that was retrieved were placed in structs. Such as:
     
    a. **name**: Holds the name of the station.
    
-   b. **links**: An array of type link that holds data about each link from the station.
+   b. **links**: An array of links that holds data about each link from the station.
     
     
     ... // The following is data about the path that the dijkstra algorithm uses.
@@ -39,8 +39,6 @@ Secondly, the data that was retrieved were placed in structs. Such as:
    e. *link* **∗from_line**: Holds the string of the name of line.
    
    f. **time**: Holds the time taken to reach this station.
-   
-   g. **distance**: Holds the distance from the starting station to this station.
    
 </p></details>
 
