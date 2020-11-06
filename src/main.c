@@ -25,7 +25,6 @@ typedef struct station{
     struct station *from_station; // pointer to the previous station that the train visited.
     link *from_link; // the line that the train used from the from_station to this station.
     double time; // the time is took to reach this station from the starting station.
-    double distance; // the distance between the starting station and this station.
 
 }station;
 
@@ -71,9 +70,8 @@ void push_into_priority_queue(queue *queue, priority_queue_node *new_node){
         while (current->next != NULL && current->time < new_node->time){
             current = current->next;
         }
-        priority_queue_node* temp = current->next;
+        new_node->next = current->next;
         current->next = new_node;
-        new_node->next = temp;
     }
 }
 
@@ -156,7 +154,6 @@ void dijkstra(station *stations, int starting_station, int target_station){
             stations[current_link->to_station].from_station = node->from_station;
             stations[current_link->to_station].from_link = current_link;
             stations[current_link->to_station].time = node->time;
-            stations[current_link->to_station].distance = current_link->distance + node->from_station->distance;
             from_station = current_link->to_station; // to get the links from this station as it is now part of the path.
         }
     }
@@ -210,9 +207,10 @@ stack *get_path(station *stations, int target_station){
     push_into_stack(pathway, station_node);
 
     while (current_station->from_station != NULL){
+        current_station = current_station->from_station;
         station_node = create_node(current_station);
         push_into_stack(pathway, station_node);
-        current_station = current_station->from_station;
+
     }
 
 
@@ -237,7 +235,8 @@ void output_path(station *stations, int target_station){
            next_station->from_link->direction,
            next_station->from_link->line);
 
-    int stops_counter=0; // count the number of stops before the next line switch.
+    int stops_counter = 0; // count the number of stops before the next line switch.
+    double distance = next_station->from_link->distance;
 
     // continue popping until the next_station is not the target_station.
     while (station_node->next->next != NULL){
@@ -246,6 +245,7 @@ void output_path(station *stations, int target_station){
         station_node = pop_stack(pathway);
         current_station = station_node->to_station;
         next_station = station_node->next->to_station;
+        distance += next_station->from_link->distance;
 
 
         // if the line switches, then output that the user should switch lines.
@@ -263,7 +263,7 @@ void output_path(station *stations, int target_station){
 
     // output the arrival message.
     printf("%d stop(s).\nARRIVE AT: %s. JOURNEY TIME: %.2f minutes / Distance Travelled: %.2f km", stops_counter + 1,
-           next_station->name, next_station->time, next_station->distance);
+           next_station->name, next_station->time, distance);
 
 }
 
@@ -298,7 +298,6 @@ int initialise_stations(station *stations, char *filename){
             strcpy(stations[station].name, station_name);
             stations[station].links_exhausted = 0;
             stations[station].time = 0;
-            stations[station].distance = 0.0;
             stations[station].from_station = NULL;
             stations[station].from_link = NULL;
 
