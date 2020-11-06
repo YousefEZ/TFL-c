@@ -251,8 +251,14 @@ void output_path(station *stations, int target_station){
         // if the line switches, then output that the user should switch lines.
         if (strcmp(current_station->from_link->line, next_station->from_link->line) != 0) {
 
+            if (stops_counter == 1){
+                printf("%d stop\n", stops_counter);
+            } else {
+                printf("%d stops\n", stops_counter);
+            }
 
-            printf("%d stop(s)\nWHEN ARRIVING AT: %s, SWITCH LINE TO %s - %s line, and ride for ", stops_counter,
+
+            printf("WHEN ARRIVING AT: %s, SWITCH LINE TO %s - %s line, and ride for ",
                    current_station->name, next_station->from_link->direction,
                    next_station->from_link->line);
 
@@ -262,7 +268,13 @@ void output_path(station *stations, int target_station){
     }
 
     // output the arrival message.
-    printf("%d stop(s).\nARRIVE AT: %s. JOURNEY TIME: %.2f minutes / Distance Travelled: %.2f km", stops_counter + 1,
+    stops_counter++;
+    if (stops_counter == 1){
+        printf("%d stop\n", stops_counter);
+    } else {
+        printf("%d stops\n", stops_counter);
+    }
+    printf("ARRIVE AT: %s. JOURNEY TIME: %.2f minutes / Distance Travelled: %.2f km",
            next_station->name, next_station->time, distance);
 
 }
