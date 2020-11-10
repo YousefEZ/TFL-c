@@ -38,7 +38,7 @@ $ tfl.exe
 
 (4) Exit the program.
 
-
+---
 
 ## Dataset Manipulation:
 Firstly, the dataset has been manipulated by:
@@ -49,7 +49,7 @@ Firstly, the dataset has been manipulated by:
 - [x] Deleting the "AM Peak" & "Inter Peak" Columns.  
 - [x] Converting the file into a .csv to allow the file to be read more easily.  
 
+---
    
-References: [Dijkstra's Algorithm - Computerphile](https://www.youtube.com/watch?v=GazC3A4OQTE&ab_channel=Computerphile)
-
+References: [Dijkstra's Algorithm - Computerphile](https://www.youtube.com/watch?v=GazC3A4OQTE&ab_channel=Computerphile)  
 README File created using [Dillinger](https://dillinger.io/)
